@@ -19,8 +19,8 @@ const CONFIG_FILE = path.join(os.homedir(), '.ai-commit.json');
 
 const DEFAULT_CONFIG: Config = {
   commitStyle: 'conventional',
-  aiProvider: 'ollama',
-  model: 'qwen3:1.7b',
+  aiProvider: 'openrouter',
+  model: 'openai/gpt-4o-mini',
   maxTokens: 150,
   includeContext: true,
   autoCommit: false
@@ -151,6 +151,7 @@ export async function setupConfig(): Promise<Config> {
         name: 'modelChoice',
         message: 'Choose OpenRouter model:',
         choices: [
+          { name: 'GPT-5 Mini (OpenAI)', value: 'openai/gpt-5-mini' },
           { name: 'GPT-4o Mini (OpenAI)', value: 'openai/gpt-4o-mini' },
           { name: 'GPT-3.5 Turbo (OpenAI)', value: 'openai/gpt-3.5-turbo' },
           { name: 'GPT-4 (OpenAI)', value: 'openai/gpt-4' },
@@ -159,9 +160,9 @@ export async function setupConfig(): Promise<Config> {
           { name: 'Llama 3.1 8B (Meta)', value: 'meta-llama/llama-3.1-8b-instruct:free' },
           { name: 'Llama 3.1 70B (Meta)', value: 'meta-llama/llama-3.1-70b-instruct' },
           { name: 'Gemini Pro (Google)', value: 'google/gemini-pro' },
-          { name: 'Custom model', value: 'custom' }
+          { name: 'Enter custom model', value: 'custom' }
         ],
-        default: 'openai/gpt-3.5-turbo'
+        default: 'openai/gpt-4o-mini'
       }
     ]);
 
