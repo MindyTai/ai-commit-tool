@@ -306,11 +306,15 @@ index 1234567..abcdefg 100644
 @@ -10,6 +10,9 @@ class User:
      def __init__(self, name):
          self.name = name
- 
+
 +    def get_username(self):
 +        return self.name
 +
 Output: feat(user): add get_username method
+
+Add new method to retrieve the username from User class.
+This provides a clean interface for accessing the user's name
+property without direct attribute access.
 
 Example:
 diff --git a/auth.py b/auth.py
@@ -325,6 +329,16 @@ index 2345678..bcdefgh 100644
      return verify_token(token)
 
 Output: fix(auth): handle missing token
+
+Replace silent failure with explicit error when token is missing.
+Previously the function returned False for missing tokens, which
+could be confused with invalid tokens. Now raises ValueError with
+clear message to help with debugging authentication issues.
+
+Generate a commit message with a concise subject line and detailed body describing:
+- What specific changes were made
+- Why the changes were necessary
+- Any important implementation details or considerations
 
 Now your turn:`;
 

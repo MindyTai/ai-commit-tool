@@ -148,21 +148,39 @@ class CommitMessageFormatter {
   }
 
   private createSummarySubject(longMessage: string): string {
-    // Extract key action words and create a concise summary
+    // Create a specific, contextual summary from the long message
     const detectedType = this.detectCommitType(longMessage);
     
-    // Extract the main action/object from the message
-    const cleanedMessage = this.removeTypeFromSubject(longMessage, detectedType);
+    // Remove any existing conventional prefixes first
+    let cleanedMessage = this.removeTypeFromSubject(longMessage, detectedType);
+    
+    // Extract meaningful phrases and context
     const words = cleanedMessage.toLowerCase().split(/\s+/);
     
-    // Find key nouns and verbs to create a summary
-    const keyWords = words.filter(word => 
-      word.length > 3 && 
-      !['the', 'and', 'for', 'with', 'that', 'this', 'from', 'into', 'when', 'where'].includes(word)
-    ).slice(0, 4); // Take first 4 meaningful words
+    // Look for specific technical terms and context
+    const technicalTerms = ['git', 'commit', 'body', 'subject', 'template', 'format', 'validation', 'config', 'api', 'service', 'utils'];
+    const actionWords = ['add', 'remove', 'update', 'fix', 'improve', 'refactor', 'implement', 'create', 'delete', 'enhance'];
     
-    const summary = keyWords.join(' ');
-    const formattedSummary = this.formatSubjectDescription(summary || 'update code');
+    // Find the main action
+    const action = words.find(word => actionWords.includes(word)) || 'update';
+    
+    // Find specific context - prioritize technical terms
+    const context = technicalTerms.find(term => words.includes(term)) ||
+                   words.find(word => word.length > 4 && 
+                             !['from', 'with', 'that', 'this', 'when', 'where', 'they', 'have', 'been'].includes(word)) ||
+                   'functionality';
+    
+    // Create more specific summary based on detected patterns
+    let summary = `${action} ${context}`;
+    
+    // Add more specificity if we can detect it
+    if (words.includes('git') && words.includes('commit')) {
+      summary = `${action} git commit ${words.includes('body') ? 'body' : words.includes('subject') ? 'subject' : 'handling'}`;
+    } else if (words.includes('template') || words.includes('format')) {
+      summary = `${action} ${context} ${words.includes('format') ? 'formatting' : 'template'}`;
+    }
+    
+    const formattedSummary = this.formatSubjectDescription(summary);
     
     return this.config.commitStyle === 'conventional' 
       ? `${detectedType}: ${formattedSummary}`
@@ -215,8 +233,11 @@ class CommitMessageFormatter {
       .map(line => line.trim())
       .filter(line => line.length > 0);
     
-    // Format bullet points consistently
+    // Format bullet points consistently and remove any conventional commit prefixes
     const formattedLines = lines.map(line => {
+      // Remove conventional commit prefixes from body content
+      line = line.replace(/^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\([^)]*\))?\s*:\s*/i, '');
+      
       // Convert various bullet formats to standard dash format
       line = line.replace(/^[•*+]\s*/, '- ');
       line = line.replace(/^\d+\.\s*/, '- ');
