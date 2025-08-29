@@ -325,17 +325,9 @@ npm run dev  # Watch mode
 
 All contributions will be under the same CC BY-NC 4.0 license.
 
-## 📋 Changelog
+## 📋 Releases
 
-### v1.0.0 - Production Release
-- ✨ **Multi-Provider Support**: OpenAI, OpenRouter, Ollama, Custom APIs
-- 🎯 **Smart Commit Generation**: Contextual, detailed commit messages
-- 🛡️ **Security Hardened**: Input validation, secure API handling
-- 📝 **Conventional Commits**: Full specification compliance
-- ⚙️ **Zero-Config Setup**: Interactive configuration wizard
-- 🔍 **Advanced Git Integration**: Robust diff parsing and status handling
-- ✏️ **Interactive Workflow**: Review and edit before committing
-- 🚀 **Production Ready**: Comprehensive error handling and validation
+See [GitHub Releases](../../releases) for version history, changelogs, and download links.
 
 ---
 
