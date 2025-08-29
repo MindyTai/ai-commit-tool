@@ -45,7 +45,7 @@ Interactive wizard will configure:
 git add src/
 
 # Generate intelligent commit message
-ai-commit
+ai-commit commit
 
 # Review, edit if needed, and commit!
 ```
@@ -53,10 +53,10 @@ ai-commit
 ### 3. **Advanced Usage**
 ```bash
 # Skip confirmation for trusted changes
-ai-commit --no-confirm
+ai-commit commit --no-confirm
 
 # Use custom message with AI formatting
-ai-commit -m "implement user authentication"
+ai-commit commit -m "implement user authentication"
 ```
 
 ## Commands
@@ -183,37 +183,18 @@ Includes password hashing and token validation middleware.
 git add src/auth.js src/middleware/jwt.js
 
 # Generate commit message
-ai-commit
+ai-commit commit
 ```
 
 ### With Custom Message
 ```bash
-ai-commit -m "fix: resolve memory leak in user session handling"
+ai-commit commit -m "fix: resolve memory leak in user session handling"
 ```
 
 ### Auto-commit Mode
 ```bash
 # Skip confirmation (use with caution)
-ai-commit --no-confirm
-```
-
-## Development
-
-### Building from Source
-
-```bash
-# Clone the repository
-git clone https://github.com/your-username/ai-commit.git
-cd ai-commit
-
-# Install dependencies
-npm install
-
-# Build the project
-npm run build
-
-# Link for local development
-npm link
+ai-commit commit --no-confirm
 ```
 
 ### Scripts
@@ -267,7 +248,7 @@ ai-commit setup
 git status
 
 # Test with simple change
-echo "test" > test.txt && git add test.txt && ai-commit
+echo "test" > test.txt && git add test.txt && ai-commit commit
 ```
 
 ### 🆘 Getting Help
@@ -333,4 +314,4 @@ See [GitHub Releases](../../releases) for version history, changelogs, and downl
 
 **Made with ❤️ for developers who care about commit quality**
 
-> 💡 **Pro Tip**: Use `ai-commit --no-confirm` in CI/CD pipelines for automated, high-quality commits!
+> 💡 **Pro Tip**: Use `ai-commit commit --no-confirm` in CI/CD pipelines for automated, high-quality commits!
