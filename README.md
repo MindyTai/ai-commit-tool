@@ -61,7 +61,7 @@ ai-commit -m "implement user authentication"
 
 ## Commands
 
-### `ai-commit` or `ai-commit commit`
+### `ai-commit commit` or `ai-commit c`
 Generate a commit message for staged changes and create the commit.
 
 **Options:**
@@ -71,13 +71,13 @@ Generate a commit message for staged changes and create the commit.
 **Examples:**
 ```bash
 # Interactive commit with AI-generated message
-ai-commit
+ai-commit commit
 
 # Use custom message
-ai-commit -m "fix: resolve login issue"
+ai-commit commit -m "fix: resolve login issue"
 
 # Auto-commit without confirmation
-ai-commit --no-confirm
+ai-commit commit --no-confirm
 ```
 
 ### `ai-commit setup`
