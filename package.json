@@ -1,5 +1,5 @@
 {
-  "name": "ai-commit",
+  "name": "@toasterdev/ai-commit",
   "version": "1.0.0",
   "description": "AI-powered git commit message generator",
   "main": "dist/index.js",
@@ -20,7 +20,7 @@
     "cli",
     "conventional-commits"
   ],
-  "author": "Your Name",
+  "author": "@toasterdev",
   "license": "CC-BY-NC-4.0",
   "dependencies": {
     "commander": "^11.1.0",
@@ -40,5 +40,14 @@
   "files": [
     "dist/**/*",
     "README.md"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MindyTai/ai-commit-tool.git"
+  },
+  "types": "./dist/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/MindyTai/ai-commit-tool/issues"
+  },
+  "homepage": "https://github.com/MindyTai/ai-commit-tool#readme"
 }
