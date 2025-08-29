@@ -67,6 +67,8 @@ Generate a commit message for staged changes and create the commit.
 **Options:**
 - `-m, --message <message>` - Use a custom message instead of AI generation
 - `--no-confirm` - Skip confirmation prompt and commit immediately
+- `--help, -h` - Show help message
+- `--version, -V` - Show version number
 
 **Examples:**
 ```bash
@@ -203,25 +205,6 @@ ai-commit commit --no-confirm
 - `npm run dev` - Watch mode for development
 - `npm test` - Run tests (when available)
 
-## Publishing
-
-To publish this package to npm:
-
-1. **Update Version**
-   ```bash
-   npm version patch  # or minor/major
-   ```
-
-2. **Build and Test**
-   ```bash
-   npm run build
-   npm test
-   ```
-
-3. **Publish**
-   ```bash
-   npm publish
-   ```
 
 ## 🔧 Troubleshooting
 

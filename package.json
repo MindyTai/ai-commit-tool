@@ -1,6 +1,6 @@
 {
-  "name": "@miycctwn/ai-commit",
-  "version": "1.0.0",
+  "name": "@micytwn/ai-commit",
+  "version": "1.0.1",
   "description": "AI-powered git commit message generator",
   "main": "dist/index.js",
   "bin": {
@@ -43,11 +43,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/miycctwn/ai-commit.git"
+    "url": "git+https://github.com/miycctwn/ai-commit-tool.git"
   },
   "types": "./dist/index.d.ts",
   "bugs": {
-    "url": "https://github.com/miycctwn/ai-commit/issues"
+    "url": "https://github.com/miycctwn/ai-commit-tool/issues"
   },
-  "homepage": "https://github.com/MindyTai/ai-commit-tool#readme"
+  "homepage": "https://github.com/miycctwn/ai-commit-tool"
 }
