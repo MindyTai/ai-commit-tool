@@ -21,7 +21,7 @@
     "conventional-commits"
   ],
   "author": "Your Name",
-  "license": "MIT",
+  "license": "CC-BY-NC-4.0",
   "dependencies": {
     "commander": "^11.1.0",
     "inquirer": "^9.2.12",
