@@ -213,10 +213,19 @@ class CommitMessageFormatter {
   }
 
   private removeTypeFromSubject(subject: string, detectedType: string): string {
+    // Remove conventional commit prefixes first (most specific)
+    const conventionalRegex = /^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\([^)]*\))?\s*:\s*/i;
+    let cleaned = subject.replace(conventionalRegex, '');
+    
+    // Then remove keyword patterns
     const keywords = TYPE_DETECTION_MAP[detectedType] || [];
-    const keywordPattern = keywords.join('|');
-    const regex = new RegExp(`^(${keywordPattern})\\s+`, 'i');
-    return subject.replace(regex, '');
+    if (keywords.length > 0) {
+      const keywordPattern = keywords.join('|');
+      const regex = new RegExp(`^(${keywordPattern})\\s+`, 'i');
+      cleaned = cleaned.replace(regex, '');
+    }
+    
+    return cleaned;
   }
 
   private formatSubjectDescription(subject: string): string {
