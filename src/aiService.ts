@@ -294,7 +294,15 @@ function getSystemPrompt(commitStyle: 'conventional' | 'freeform'): string {
   return `You are a helpful assistant that writes git commit messages.
 - Always write in imperative tense.
 - Be concise (max 1 line).
-- Use conventional commit style (feat, fix, chore, docs, refactor, test, etc.).`;
+- Use conventional commit style with these prefixes:
+  * feat: new features or functionality
+  * fix: bug fixes
+  * refactor: code restructuring without changing functionality (renaming, reorganizing, improving structure)
+  * chore: maintenance tasks, dependencies, build changes
+  * docs: documentation changes
+  * test: adding or modifying tests
+  * style: formatting, whitespace, code style changes
+- Pay special attention to refactoring: if code is being reorganized, renamed, or restructured without adding new features, use "refactor" prefix.`;
 }
 
 async function buildPrompt(stagedChanges: string, config: Config): Promise<string> {
@@ -335,10 +343,32 @@ Previously the function returned False for missing tokens, which
 could be confused with invalid tokens. Now raises ValueError with
 clear message to help with debugging authentication issues.
 
+Example:
+diff --git a/config.py b/config.py
+index 3456789..cdefghi 100644
+--- a/config.py
++++ b/config.py
+@@ -20,8 +20,8 @@ class ConfigManager:
+-    def setup_provider(self):
++    def setup_ai_provider(self):
+         # Setup logic here
+         pass
+     
+-    def get_config(self):
++    def get_provider_config(self):
+         return self.config
+
+Output: refactor(config): rename methods for clarity
+
+Rename setup_provider to setup_ai_provider and get_config to
+get_provider_config to better reflect their specific purposes.
+This improves code readability and makes the API more explicit.
+
 Generate a commit message with a concise subject line and detailed body describing:
 - What specific changes were made
 - Why the changes were necessary
 - Any important implementation details or considerations
+- Use "refactor" prefix when code is being reorganized, renamed, or restructured without adding new functionality
 
 Now your turn:`;
 
