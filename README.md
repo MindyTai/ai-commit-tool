@@ -18,7 +18,7 @@
 
 ```bash
 # Install globally via npm
-npm install -g ai-commit
+npm install -g @micytwn/ai-commit
 
 # Or clone and build from source
 git clone <repository-url>
@@ -55,7 +55,7 @@ ai-commit commit
 # Skip confirmation for trusted changes
 ai-commit commit --no-confirm
 
-# Use custom message with AI formatting
+# Use custom message (skips AI generation)
 ai-commit commit -m "implement user authentication"
 ```
 
@@ -111,24 +111,24 @@ Configuration is stored in `~/.ai-commit.json`. You can edit this file directly 
 | `aiProvider` | `'openai' \| 'openrouter' \| 'ollama' \| 'custom'` | AI service provider | `'openai'` |
 | `apiKey` | `string` | API key for the provider | - |
 | `apiUrl` | `string` | API endpoint URL | - |
-| `model` | `string` | Model name to use | `'gpt-3.5-turbo'` |
+| `model` | `string` | Model name to use | `gpt-5-nano` |
 | `maxTokens` | `number` | Maximum tokens for generation | `150` |
 | `includeContext` | `boolean` | Include repository context | `true` |
 | `autoCommit` | `boolean` | Skip confirmation prompts | `false` |
 
 ## AI Providers
 
-### 🔥 OpenAI (Recommended)
-- **Models**: `gpt-4`, `gpt-4-turbo`, `gpt-3.5-turbo`
+### 🔥 OpenAI
+- **Models**: `gpt-5`, `gpt-5-nano`, `gpt-4o`, `gpt-4o-mini`, `gpt-4.1-nano`, etc.
 - **Quality**: Excellent commit message generation
 - **Setup**: OpenAI API key required
 - **Cost**: ~$0.01-0.03 per commit
 
 ### 🌐 OpenRouter
-- **Models**: Claude, Llama, Mistral, and 50+ others
-- **Quality**: High-quality alternatives to OpenAI
+- **Models**: Access to OpenAI, Anthropic Claude, and 50+ others
+- **Quality**: High-quality alternatives with competitive pricing
 - **Setup**: OpenRouter API key
-- **Cost**: Competitive pricing, often cheaper
+- **Cost**: Often cheaper than direct provider access
 
 ### 🏠 Ollama (Local)
 - **Models**: CodeLlama, Llama2, Mistral, etc.
