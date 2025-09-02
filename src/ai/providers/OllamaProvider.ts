@@ -2,6 +2,10 @@ import { Config } from '../../config';
 import { BaseProvider } from './BaseProvider';
 
 export class OllamaProvider extends BaseProvider {
+  protected getProviderType(): 'ollama' {
+    return 'ollama';
+  }
+
   async generateCommitMessage(stagedChanges: string, config: Config): Promise<string> {
     if (!config.apiUrl) {
       throw new Error('Ollama API URL is required');

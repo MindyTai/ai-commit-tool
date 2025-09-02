@@ -1,5 +1,5 @@
 import ora from 'ora';
-import { Config } from '../config';
+import { Config } from '../config/types';
 import { getStagedChanges, commitChanges, checkGitRepository } from '../gitUtils';
 import { generateCommitMessage } from '../ai';
 import { formatCommitMessage, validateCommitMessage } from '../templates';

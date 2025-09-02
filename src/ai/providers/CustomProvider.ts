@@ -2,6 +2,10 @@ import { Config } from '../../config';
 import { BaseProvider } from './BaseProvider';
 
 export class CustomProvider extends BaseProvider {
+  protected getProviderType(): 'custom' {
+    return 'custom';
+  }
+
   async generateCommitMessage(stagedChanges: string, config: Config): Promise<string> {
     if (!config.apiUrl) {
       throw new Error('Custom API URL is required');
@@ -33,7 +37,7 @@ export class CustomProvider extends BaseProvider {
               content: prompt
             }
           ],
-          max_tokens: config.maxTokens,
+          ...this.getTokenLimitOptions(config),
           temperature: 0.3,
         }),
       });

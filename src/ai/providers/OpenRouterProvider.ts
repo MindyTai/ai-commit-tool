@@ -2,6 +2,10 @@ import { Config } from '../../config';
 import { BaseProvider } from './BaseProvider';
 
 export class OpenRouterProvider extends BaseProvider {
+  protected getProviderType(): 'openrouter' {
+    return 'openrouter';
+  }
+
   async generateCommitMessage(stagedChanges: string, config: Config): Promise<string> {
     if (!config.apiKey) {
       throw new Error('OpenRouter API key is required');
@@ -30,7 +34,7 @@ export class OpenRouterProvider extends BaseProvider {
               content: prompt
             }
           ],
-          max_tokens: config.maxTokens,
+          ...this.getTokenLimitOptions(config),
           temperature: 0.3,
         }),
       });

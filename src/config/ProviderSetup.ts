@@ -1,23 +1,57 @@
 import inquirer from 'inquirer';
 import { AIProvider, ProviderConfig } from './types';
 import { ConfigValidator } from './ConfigValidator';
+import { COMMON_MODEL_CONFIGS, OPENROUTER_MODEL_PREFIXES } from '../ai/ModelConfigurations';
 
 export class ProviderSetup {
   private validator: ConfigValidator;
 
-  // Provider-specific model choices
-  private readonly providerModels = {
-    openai: [
-      { name: 'GPT-5 Nano (faster, cheaper)', value: 'gpt-5-nano' },
+  // Generate provider-specific model choices from centralized configurations
+  private getProviderModels() {
+    return {
+      openai: this.getOpenAIModels(),
+      openrouter: this.getOpenRouterModels(),
+      ollama: this.getOllamaModels(),
+      custom: [{ name: 'Enter custom model', value: 'custom' }]
+    };
+  }
+
+  private getOpenAIModels() {
+    const openaiModels = Object.keys(COMMON_MODEL_CONFIGS)
+      .filter(model => {
+        // Include GPT-4 and GPT-5 series only
+        return model.startsWith('gpt-4') || model.startsWith('gpt-5');
+      })
+      .map(model => ({
+        name: model,
+        value: model
+      }));
+    
+    return [
+      ...openaiModels,
       { name: 'Enter custom model', value: 'custom' }
-    ],
-    openrouter: [
-      { name: 'GPT-5 Nano (OpenAI)', value: 'openai/gpt-5-nano' },
+    ];
+  }
+
+  private getOpenRouterModels() {
+    const openrouterModels = Object.keys(OPENROUTER_MODEL_PREFIXES)
+      .map(model => ({
+        name: model,
+        value: model
+      }));
+    
+    return [
+      ...openrouterModels,
       { name: 'Enter custom model', value: 'custom' }
-    ],
-    ollama: [],
-    custom: []
-  };
+    ];
+  }
+
+  private getOllamaModels() {
+    
+    return [
+      { name: 'Enter custom model', value: 'custom' }
+    ];
+  }
 
   constructor() {
     this.validator = new ConfigValidator();
@@ -50,11 +84,22 @@ export class ProviderSetup {
       type: 'list',
       name: 'modelChoice',
       message: 'Choose OpenAI model:',
-      choices: this.providerModels.openai,
-      default: 'gpt-3.5-turbo'
+      choices: this.getProviderModels().openai,
+      default: 'gpt-5-nano'
     }]);
 
-    return { apiKey: key, model: modelChoice };
+    let model = modelChoice;
+    if (modelChoice === 'custom') {
+      const { customModel } = await inquirer.prompt([{
+        type: 'input',
+        name: 'customModel',
+        message: 'Enter custom model name (e.g., gpt-4-custom):',
+        validate: (input: string) => input.trim().length > 0 || 'Please enter a model name'
+      }]);
+      model = customModel;
+    }
+
+    return { apiKey: key, model };
   }
 
   private async setupOpenRouter(): Promise<ProviderConfig> {
@@ -69,8 +114,8 @@ export class ProviderSetup {
       type: 'list',
       name: 'modelChoice',
       message: 'Choose OpenRouter model:',
-      choices: this.providerModels.openrouter,
-      default: 'openai/gpt-4o-mini'
+      choices: this.getProviderModels().openrouter,
+      default: 'openai/gpt-5-nano'
     }]);
 
     let model = modelChoice;
@@ -87,25 +132,36 @@ export class ProviderSetup {
     return { apiKey: key, model };
   }
 
-  private async setupOllama(): Promise<ProviderConfig> {
-    const { url, modelName } = await inquirer.prompt([
-      {
-        type: 'input',
-        name: 'url',
-        message: 'Enter Ollama API URL:',
-        default: 'http://localhost:11434',
-        validate: (input: string) => this.validator.validateUrl(input) || 'Please enter a valid URL'
-      },
-      {
-        type: 'input',
-        name: 'modelName',
-        message: 'Enter model name (e.g., llama2, codellama):',
-        default: 'llama2',
-        validate: (input: string) => input.trim().length > 0 || 'Please enter a model name'
-      }
-    ]);
 
-    return { apiUrl: url, model: modelName };
+  private async setupOllama(): Promise<ProviderConfig> {
+    const { url } = await inquirer.prompt([{
+      type: 'input',
+      name: 'url',
+      message: 'Enter Ollama API URL:',
+      default: 'http://localhost:11434',
+      validate: (input: string) => this.validator.validateUrl(input) || 'Please enter a valid URL'
+    }]);
+
+    const { modelChoice } = await inquirer.prompt([{
+      type: 'list',
+      name: 'modelChoice',
+      message: 'Choose Ollama model:',
+      choices: this.getProviderModels().ollama,
+      default: 'llama3.1'
+    }]);
+
+    let model = modelChoice;
+    if (modelChoice === 'custom') {
+      const { customModel } = await inquirer.prompt([{
+        type: 'input',
+        name: 'customModel',
+        message: 'Enter custom model name (e.g., llama2, codellama):',
+        validate: (input: string) => input.trim().length > 0 || 'Please enter a model name'
+      }]);
+      model = customModel;
+    }
+
+    return { apiUrl: url, model };
   }
 
   private async setupCustom(): Promise<ProviderConfig> {

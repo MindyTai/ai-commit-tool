@@ -3,6 +3,10 @@ import { Config } from '../../config';
 import { BaseProvider } from './BaseProvider';
 
 export class OpenAIProvider extends BaseProvider {
+  protected getProviderType(): 'openai' {
+    return 'openai';
+  }
+
   async generateCommitMessage(stagedChanges: string, config: Config): Promise<string> {
     if (!config.apiKey) {
       throw new Error('OpenAI API key is required');
@@ -27,7 +31,7 @@ export class OpenAIProvider extends BaseProvider {
             content: prompt
           }
         ],
-        max_tokens: config.maxTokens,
+        ...this.getTokenLimitOptions(config),
         temperature: 0.3,
       });
 
