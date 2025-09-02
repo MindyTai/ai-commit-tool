@@ -55,9 +55,9 @@ export class ConfigService {
         name: 'aiProvider',
         message: 'Choose your AI provider:',
         choices: [
-          { name: 'OpenAI (GPT-3.5/GPT-4)', value: 'openai' },
-          { name: 'Ollama (Local models)', value: 'ollama' },
-          { name: 'OpenRouter (Multiple AI models)', value: 'openrouter' },
+          { name: 'OpenAI', value: 'openai' },
+          { name: 'Ollama', value: 'ollama' },
+          { name: 'OpenRouter', value: 'openrouter' },
           { name: 'Custom API endpoint', value: 'custom' }
         ],
         default: 'openai'

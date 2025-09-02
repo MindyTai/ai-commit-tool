@@ -8,19 +8,11 @@ export class ProviderSetup {
   // Provider-specific model choices
   private readonly providerModels = {
     openai: [
-      { name: 'GPT-3.5 Turbo (faster, cheaper)', value: 'gpt-3.5-turbo' },
-      { name: 'GPT-4 (more accurate, slower)', value: 'gpt-4' },
-      { name: 'GPT-4 Turbo', value: 'gpt-4-turbo-preview' }
+      { name: 'GPT-5 Nano (faster, cheaper)', value: 'gpt-5-nano' },
+      { name: 'Enter custom model', value: 'custom' }
     ],
     openrouter: [
-      { name: 'GPT-4o Mini (OpenAI)', value: 'openai/gpt-4o-mini' },
-      { name: 'GPT-3.5 Turbo (OpenAI)', value: 'openai/gpt-3.5-turbo' },
-      { name: 'GPT-4 (OpenAI)', value: 'openai/gpt-4' },
-      { name: 'Claude 3 Haiku (Anthropic)', value: 'anthropic/claude-3-haiku-20240307' },
-      { name: 'Claude 3.5 Sonnet (Anthropic)', value: 'anthropic/claude-3.5-sonnet' },
-      { name: 'Llama 3.1 8B (Meta)', value: 'meta-llama/llama-3.1-8b-instruct:free' },
-      { name: 'Llama 3.1 70B (Meta)', value: 'meta-llama/llama-3.1-70b-instruct' },
-      { name: 'Gemini Pro (Google)', value: 'google/gemini-pro' },
+      { name: 'GPT-5 Nano (OpenAI)', value: 'openai/gpt-5-nano' },
       { name: 'Enter custom model', value: 'custom' }
     ],
     ollama: [],
