@@ -23,31 +23,18 @@ export class PromptBuilder {
 
   getSystemPrompt(commitStyle: 'conventional' | 'freeform'): string {
     if (commitStyle === 'freeform') {
-      return `You write git commit messages by analyzing the diff. Look at what files were deleted and what files were added.
-
-CRITICAL: NEVER use these generic words in the title: "update", "change", "modify", "improve", "implement"
-
-TITLE RULES:
-- If you see a file deleted and multiple new files added → "Refactor [component] into [new structure]"
-- If you see new classes/modules added → "Add [specific feature/component]"
-- If you see files moved/renamed → "Restructure [component] organization"
-- If you see bug fixes → "Fix [specific issue]"
-- Use imperative tense and be specific about WHAT changed
-
-BODY RULES:
-- List the key files that were deleted/added/modified
-- Explain the architectural change or new functionality
-- Keep it factual and specific
-
-EXAMPLES:
-- "Refactor template system into modular architecture" (when templates.ts → multiple template files)
-- "Add OAuth authentication with Google provider" (when auth files are added)
-- "Extract database queries into repository pattern" (when moving DB code)`;
+      return `You are a helpful assistant that writes git commit messages.
+- Write in imperative tense (e.g., "add feature" not "added feature").
+- Be concise but descriptive.
+- Use natural language without prefixes.
+- Focus on what the change does and why it's important.
+- Keep the subject line under 72 characters.
+- Example: "Add user authentication system" or "Fix memory leak in data processing"`;
     }
 
     return `You are a helpful assistant that writes git commit messages.
 - Always write in imperative tense.
-- Be specific and descriptive about what changed.
+- Be concise (max 1 line).
 - Use conventional commit style with these prefixes:
   * feat: new features or functionality
   * fix: bug fixes
@@ -56,9 +43,7 @@ EXAMPLES:
   * docs: documentation changes
   * test: adding or modifying tests
   * style: formatting, whitespace, code style changes
-- Avoid generic words like "update", "change", "modify" - be specific about what was updated.
-- Pay special attention to refactoring: if code is being reorganized, renamed, or restructured without adding new features, use "refactor" prefix.
-- Example: "feat: add user authentication system" or "refactor: restructure template system into modular architecture"`;
+- Pay special attention to refactoring: if code is being reorganized, renamed, or restructured without adding new features, use "refactor" prefix.`;
   }
 
   private getFewShotExamples(commitStyle: 'conventional' | 'freeform' = 'conventional'): string {
@@ -81,35 +66,25 @@ Provides a clean interface for accessing the user's name
 property without direct attribute access.
 
 Example:
-diff --git a/templates.ts b/templates.ts
-index 1234567..0000000 100644
---- a/templates.ts
-+++ /dev/null
-@@ -1,100 +0,0 @@
--// Large monolithic template file
--export function formatMessage() { }
--export function validateMessage() { }
-+++ b/src/templates/CommitMessageProcessor.ts
-@@ -0,0 +1,20 @@
-+export class CommitMessageProcessor {
-+  format() { }
-+}
-+++ b/src/templates/formatters/ConventionalFormatter.ts
-+++ b/src/templates/validators/BaseValidator.ts
+diff --git a/auth.py b/auth.py
+index 2345678..bcdefgh 100644
+--- a/auth.py
++++ b/auth.py
+@@ -15,7 +15,10 @@ def authenticate(token):
+     if not token:
+-        return False
++        raise ValueError("Token is required")
+     
+     return verify_token(token)
 
-Output: Refactor template system into modular architecture
+Output: Handle missing authentication token with explicit error
 
-Deleted monolithic src/templates.ts and created specialized classes:
-- CommitMessageProcessor.ts for orchestrating message processing
-- MessageSanitizer.ts for cleaning AI responses
-- Formatters (BaseFormatter, ConventionalFormatter, FreeformFormatter)
-- Validators (BaseValidator, ConventionalValidator, FreeformValidator)
-- Factory classes for creating appropriate formatters and validators
+Replace silent failure with ValueError when token is missing.
+Previously returned False for missing tokens, which could be
+confused with invalid tokens. Now raises clear error message
+to help with debugging authentication issues.
 
-This modular approach improves maintainability and follows single
-responsibility principle with dedicated classes for each concern.
-
-Generate a commit message with a descriptive title summarizing the main change and a body describing the specific files changed.
+Generate a natural language commit message describing what the change does and why it's important.
 
 Now your turn:`;
     }

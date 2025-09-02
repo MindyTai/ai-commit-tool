@@ -16,6 +16,8 @@
 
 ## 🚀 Quick Installation
 
+[![npm version](https://badge.fury.io/js/@micytwn%2Fai-commit.svg)](https://www.npmjs.com/package/@micytwn/ai-commit)
+
 ```bash
 # Install globally via npm
 npm install -g @micytwn/ai-commit
