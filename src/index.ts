@@ -5,7 +5,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { loadConfig, setupConfig } from './config';
 import { getStagedChanges, commitChanges, checkGitRepository } from './gitUtils';
-import { generateCommitMessage } from './aiService';
+import { generateCommitMessage } from './ai';
 import { formatCommitMessage, validateCommitMessage } from './templates';
 import inquirer from 'inquirer';
 import { readFileSync } from 'fs';
